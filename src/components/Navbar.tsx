@@ -18,7 +18,7 @@ const Navbar = () => {
 							<Link
 								href="/pricing"
 								className={buttonVariants({
-									variant: "ghost",
+									variant: "outline",
 									size: "sm",
 								})}
 							>
@@ -28,6 +28,7 @@ const Navbar = () => {
 								className={buttonVariants({
 									variant: "ghost",
 									size: "sm",
+									className: "bg-green-400 hover:bg-green-200",
 								})}
 							>
 								Sign in
