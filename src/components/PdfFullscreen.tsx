@@ -17,7 +17,7 @@ function PdfFullscreen({ fileUrl }: PdfFullscreenProps) {
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [numPages, setNumPages] = useState<number>();
-	const [currPage, setCurrPage] = useState<number>(1);
+
 	return (
 		<Dialog
 			open={isOpen}
