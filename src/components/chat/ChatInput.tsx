@@ -1,24 +1,20 @@
 import { Send } from "lucide-react";
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { ChatContext } from "./ChatContext";
+import { useRef } from "react";
 
 interface ChatInputProps {
 	isDisabled?: boolean;
 }
 
 function ChatInput({ isDisabled }: ChatInputProps) {
-	
-	const {
-		addMessage,
-		handleInputChange,
-		isLoading,
-		message,
-	  } = useContext(ChatContext)
+	const { addMessage, handleInputChange, isLoading, message } =
+		useContext(ChatContext);
 
-	  const textareaRef = useRef<HTMLTextAreaElement>(null)
-	  
+	const textareaRef = useRef<HTMLTextAreaElement>(null);
+
 	return (
 		<div className="absolute bottom-0 left-0 w-full">
 			<div className="mx-2 flex flex-row gap-3 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
@@ -27,7 +23,7 @@ function ChatInput({ isDisabled }: ChatInputProps) {
 						<div className="relative">
 							<Textarea
 								rows={1}
-								  ref={textareaRef}
+								ref={textareaRef}
 								maxRows={4}
 								autoFocus
 								onChange={handleInputChange}

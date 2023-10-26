@@ -9,6 +9,9 @@ type OmitText = Omit<Messages[number], 'text'>
 
 type ExtendedText = {
   text: string | JSX.Element
+  isUserMessage?: any
+  id?:any
+  createdAt?:any
 }
 
 export type ExtendedMessage = OmitText & ExtendedText

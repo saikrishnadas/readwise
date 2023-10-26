@@ -7,6 +7,8 @@ import { PineconeStore } from 'langchain/vectorstores/pinecone'
 import { openai } from '@/lib/openai'
 import { getPineconeClient } from '@/lib/pinecone'
 
+import { OpenAIStream, StreamingTextResponse } from 'ai'
+
 
 export const POST = async(req: NextRequest) => {
     //endpoint for asking question to the pdf file
@@ -15,6 +17,8 @@ export const POST = async(req: NextRequest) => {
 
     const {getUser} = getKindeServerSession();
     const user = getUser();
+
+    const {id:userId} = user;
 
     if(!user) return new Response("Unauthorized",{status:401})
 
@@ -44,13 +48,13 @@ export const POST = async(req: NextRequest) => {
   })
 
   const pinecone = await getPineconeClient()
-  const pineconeIndex = pinecone.Index('quill')
+  const pineconeIndex = pinecone.Index('readwise')
 
   const vectorStore = await PineconeStore.fromExistingIndex(
     embeddings,
     {
       pineconeIndex,
-      namespace: file.id,
+      // namespace: file.id
     }
   )
 

@@ -1,6 +1,10 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { db } from '../../../db/index';
+import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
+import { getPineconeClient } from '../../../lib/pinecone';
+import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
+import { PineconeStore } from 'langchain/vectorstores/pinecone';
  
 const f = createUploadthing();
  
