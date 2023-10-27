@@ -4,7 +4,7 @@ import { headers } from 'next/headers'
 import type Stripe from 'stripe'
 import cors from "../../../../lib/cors.js"
 
-export default cors(async function POST(request: Request) {
+export async function POST(request: Request) {
 
   const body = await request.text()
   const signature = headers().get('Stripe-Signature') ?? ''
@@ -77,4 +77,4 @@ export default cors(async function POST(request: Request) {
   }
 
   return new Response(null, { status: 200 })
-})
+}
