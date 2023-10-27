@@ -10,33 +10,34 @@ import { stripe } from '../lib/stripe';
 import { PLANS } from '../config/stripe';
  
 export const appRouter = router({
-    authCallback: publicProcedure.query(async () => {
-        const {getUser} = getKindeServerSession();
-        const user = getUser();
-        
-        if(!user.id || !user.email) {
-            throw new TRPCError({code: "UNAUTHORIZED"})
-        }
+  authCallback: publicProcedure.query(async () => {
+    const {getUser} = getKindeServerSession();
+    const user = getUser();
+    
+    if(!user.id || !user.email) {
+        throw new TRPCError({code: "UNAUTHORIZED"})
+    }
 
-    // check if the user is in the database
-    const dbUser = await db.user.findFirst({
-        where: {
-          id: user.id,
-        },
-      })
-  
-      if (!dbUser) {
-        // create user in db
-        await db.user.create({
-          data: {
-            id: user.id,
-            email: user.email!,
-          },
-        })
-      }
+// check if the user is in the database
+const dbUser = await db.user.findFirst({
+    where: {
+      id: user.id,
+    },
+  })
 
-        return {success: true};
-    }),
+  if (!dbUser) {
+    // create user in db
+    await db.user.create({
+      data: {
+        id: user.id,
+        email: user.email!,
+      },
+    })
+  }
+
+    return {success: true};
+}),
+
     getUserFiles: privateProcedure.query(async ({ctx}) => {
         const {userId} = ctx;
 
@@ -85,7 +86,7 @@ export const appRouter = router({
           await stripe.checkout.sessions.create({
             success_url: billingUrl,
             cancel_url: billingUrl,
-            payment_method_types: ['card', 'paypal'],
+            payment_method_types: ['card'],
             mode: 'subscription',
             billing_address_collection: 'auto',
             line_items: [
@@ -104,89 +105,89 @@ export const appRouter = router({
         return { url: stripeSession.url }
       }),
 
-    getFileMessages: privateProcedure
-    .input(
-      z.object({
-        limit: z.number().min(1).max(100).nullish(),
-        cursor: z.string().nullish(),
-        fileId: z.string(),
+      getFileMessages: privateProcedure
+      .input(
+        z.object({
+          limit: z.number().min(1).max(100).nullish(),
+          cursor: z.string().nullish(),
+          fileId: z.string(),
+        })
+      )
+      .query(async ({ ctx, input }) => {
+        const { userId } = ctx
+        const { fileId, cursor } = input
+        const limit = input.limit ?? INFINITE_QUERY_LIMIT
+  
+        const file = await db.file.findFirst({
+          where: {
+            id: fileId,
+            userId,
+          },
+        })
+  
+        if (!file) throw new TRPCError({ code: 'NOT_FOUND' })
+  
+        const messages = await db.message.findMany({
+          take: limit + 1,
+          where: {
+            fileId,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+          cursor: cursor ? { id: cursor } : undefined,
+          select: {
+            id: true,
+            isUserMessage: true,
+            createdAt: true,
+            text: true,
+          },
+        })
+  
+        let nextCursor: typeof cursor | undefined = undefined
+        if (messages.length > limit) {
+          const nextItem:any = messages.pop()
+          nextCursor = nextItem?.id
+        }
+  
+        return {
+          messages,
+          nextCursor,
+        }
+      }),
+
+    getFileUploadStatus: privateProcedure
+    .input(z.object({ fileId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const file = await db.file.findFirst({
+        where: {
+          id: input.fileId,
+          userId: ctx.userId,
+        },
       })
-    )
-    .query(async ({ ctx, input }) => {
+
+      if (!file) return { status: 'PENDING' as const }
+
+      return { status: file.uploadStatus }
+    }),
+
+  getFile: privateProcedure
+    .input(z.object({ key: z.string() }))
+    .mutation(async ({ ctx, input }) => {
       const { userId } = ctx
-      const { fileId, cursor } = input
-      const limit = input.limit ?? INFINITE_QUERY_LIMIT
 
       const file = await db.file.findFirst({
         where: {
-          id: fileId,
+          key: input.key,
           userId,
         },
       })
 
       if (!file) throw new TRPCError({ code: 'NOT_FOUND' })
 
-      const messages = await db.message.findMany({
-        take: limit + 1,
-        where: {
-          fileId,
-        },
-        orderBy: {
-          createdAt: 'desc',
-        },
-        cursor: cursor ? { id: cursor } : undefined,
-        select: {
-          id: true,
-          isUserMessage: true,
-          createdAt: true,
-          text: true,
-        },
-      })
-
-      let nextCursor: typeof cursor | undefined = undefined
-      if (messages.length > limit) {
-        const nextItem:any = messages.pop()
-        nextCursor = nextItem?.id
-      }
-
-      return {
-        messages,
-        nextCursor,
-      }
+      return file
     }),
 
-    getFileUploadStatus: privateProcedure.input(
-        z.object({fileId: z.string()})
-    ).query(async ({ctx,input}) => {
-        const {userId} = ctx;
-
-        const file = await db.file.findFirst({
-            where:{
-                id: input.fileId,
-                userId
-            }
-        })
-
-        if(!file) return {status: 'PENDING' as const}
-        
-        return {status: file.uploadStatus}
-    }),
-    getFile: privateProcedure.input(
-        z.object({key: z.string()})
-    ).mutation(async ({ctx,input}) => {
-        const {userId} = ctx;
-
-        const file = await db.file.findFirst({
-            where:{
-                key: input.key,
-                userId
-            }
-        })
-
-        if(!file) throw new TRPCError({code:"NOT_FOUND"})
-
-        return file
-    }),
     deleteFile: privateProcedure.input(
         z.object({id: z.string()})
         ).mutation(async ({ctx,input}) => {

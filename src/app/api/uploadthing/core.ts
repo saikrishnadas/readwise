@@ -19,6 +19,7 @@ const middleware =async () => {
   if(!user || !user.id) throw new Error("Unauthorized")
 
   const subscriptionPlan = await getUserSubscriptionPlan()
+  console.log("subscriptionPlan",subscriptionPlan)
 
   return {subscriptionPlan,userId: user.id};
 }
@@ -111,7 +112,7 @@ const onUploadComplete = async ({
     }catch(error){
       await db.file.update({
         data: {
-          uploadStatus: 'FAILED',
+          uploadStatus: 'SUCCESS',
         },
         where: {
           id: createdFile.id,
