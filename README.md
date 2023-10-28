@@ -3,14 +3,14 @@
 [![Version](https://img.shields.io/badge/version-1.0.0-green)](https://github.com/saikrishnadas/readwise)
 [![Live App](https://img.shields.io/badge/demo-online-green)](https://readwise.vercel.app/)
 
-![Logo](https://github.com/saikrishnadas/readwise/blob/main/src/app/favicon.ico)
+![Logo](https://thestobookimages.s3.ap-south-1.amazonaws.com/favicon.ico)
 
 **Readwise** is an AI-driven application that transforms your PDF reading experience. 
 By simply uploading any PDF document, you can engage in interactive discussions, ask questions, 
 and uncover key insights, all in real time. 
 It's a user-friendly tool that bridges the gap between readers and texts, enhancing comprehension and collaboration.
 
-![App Screenshot](https://github.com/saikrishnadas/readwise/blob/main/public/readwise3.png)
+![App Screenshot](https://thestobookimages.s3.ap-south-1.amazonaws.com/readwise3.png)
 
 ## Live Demo
 
@@ -42,16 +42,16 @@ https://readwise.vercel.app/
 
 ## Optimizations
 
-This web application is SEO optimized and has a full score of 100 from lighthouse report.
-Most of the data is cached and optimized to run on different devices and to be super fast in retriving data and minimal navigation load.
+This web application is SEO optimized and has a full score of 100 from the lighthouse report.
+Most of the data is cached and optimized to run on different devices and to be super fast in retrieving data and minimal navigation load.
 
 **Lighthouse Audits:**
 
-![Report](https://thestobookimages.s3.ap-south-1.amazonaws.com/Screenshot+2022-02-28+at+1.14.20+PM.png)
+![Report](https://thestobookimages.s3.ap-south-1.amazonaws.com/readwisescore.png)
 
 ## Support
 
-For support, email saikrishnadas666@gmail.com or message me in Linkedin.
+For support, email saikrishnadas666@gmail.com or message me on Linkedin.
 
 ## Feedback
 
