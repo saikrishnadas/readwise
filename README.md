@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Readwise - An AI-powered application that enables instant, interactive discussions with any PDF document by simply uploading the file
 
-## Getting Started
+[![Version](https://img.shields.io/badge/version-1.0.0-green)](https://github.com/saikrishnadas/readwise)
+[![Live App](https://img.shields.io/badge/demo-online-green)](https://readwise.vercel.app/)
 
-First, run the development server:
+![Logo](https://github.com/saikrishnadas/readwise/blob/main/src/app/favicon.ico)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Readwise** is an AI-driven application that transforms your PDF reading experience. 
+By simply uploading any PDF document, you can engage in interactive discussions, ask questions, 
+and uncover key insights, all in real time. 
+It's a user-friendly tool that bridges the gap between readers and texts, enhancing comprehension and collaboration.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![App Screenshot](https://github.com/saikrishnadas/readwise/blob/main/public/readwise3.png)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Live Demo
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+https://readwise.vercel.app/
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+**Frameworks:** NextJS _v13.5.4_, TypeScript _v5.0_, tRPC _v10.40.0_
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**State Management:** React Context, React-Query for Caches _v4.36.1_
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**CSS Library:** TailwindCss _v3.0_
 
-## Deploy on Vercel
+**UI Library:** Shadcn UI
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Backend Frameworks:** Node _v18.18.0_, Severless NextJS
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Database:** Postgresql (hosted on neon.tech) , **ODM:** Prisma _v5.4.2_
+
+**Authentication**: Kinde
+
+**Vector Database and AI**: Pinecone, OpenAI
+
+**Storage**: Uploadthing
+
+**Payment**: Stripe
+
+**Others:** React Hook Form _v7.47.0_, Zod _v3.22.4_, React PDF Renderer _v3.1.13_
+
+## Optimizations
+
+This web application is SEO optimized and has a full score of 100 from lighthouse report.
+Most of the data is cached and optimized to run on different devices and to be super fast in retriving data and minimal navigation load.
+
+**Lighthouse Audits:**
+
+![Report](https://thestobookimages.s3.ap-south-1.amazonaws.com/Screenshot+2022-02-28+at+1.14.20+PM.png)
+
+## Support
+
+For support, email saikrishnadas666@gmail.com or message me in Linkedin.
+
+## Feedback
+
+If you have any feedback, please reach out to saikrishnadas666@gmail.com
+
+# Hi, I'm Sai Krishna Das! 👋
+
+## 🔗 Links
+
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://saikrishnadas.com/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/sai-krishna-das/)
